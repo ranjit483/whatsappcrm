@@ -81,7 +81,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         .maybeSingle();
 
       if (error) {
-        console.error("[AuthProvider] fetchProfile error:", {
+        console.warn("[AuthProvider] fetchProfile error:", {
           message: error.message,
           details: error.details,
           hint: error.hint,
@@ -101,7 +101,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         });
       }
     } catch (err) {
-      console.error("[AuthProvider] fetchProfile threw:", err);
+      console.warn("[AuthProvider] fetchProfile threw:", err);
     } finally {
       setProfileLoading(false);
     }
@@ -126,7 +126,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           error,
         } = await supabase.auth.getSession();
 
-        if (error) console.error("[AuthProvider] getSession error:", error.message);
+        if (error) console.warn("[AuthProvider] getSession error:", error.message);
 
         if (!mounted) return;
         const currentUser = session?.user ?? null;
@@ -145,7 +145,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           setProfileLoading(false);
         }
       } catch (err) {
-        console.error("[AuthProvider] init threw:", err);
+        console.warn("[AuthProvider] init threw:", err);
       } finally {
         if (mounted) setLoading(false);
         clearTimeout(safetyTimer);
